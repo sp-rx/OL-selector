@@ -350,7 +350,7 @@ button:active{transform:translateY(1px);}
 
 
 
-<div class="section">
+<div class="section" style="display:none">
 
 <button class="normal" style="background-color:#191919" onclick="toggleByClass('toggleTarget1')">Weekend Promo</button>
 
@@ -507,7 +507,8 @@ PFLResult.innerHTML =
 
 
 <div class="section">
-<button class="normal" style="background-color:#191919" onclick="toggleByClass('toggleTarget')">Normal Price</button>
+<button class="normal"
+ onclick="toggleByClass('toggleTarget')">Pricing</button>
 
 <div class="toggleTarget" style="display:none;">
 <div class="section">
@@ -548,15 +549,13 @@ PFLResult.innerHTML =
 <button class="normal" onclick="calculateStandardDiscount()">Discount</button>
 <button style="display:none" class="normal" onclick="calculateNoExamDiscount()">No Eye Exam Price</button>
 
-<button class="normal" style="background-color:maroon" id="rCodeBtn" onclick="applyRCode()">R-Code</button>
+<button class="normal" style="background-color:maroon" id="rCodeBtn" onclick="applyRCode()">R</button>
 
 
 <div id="output" style="font-weight:bold; margin-top:2%"><i>Price : Awaiting..</i></div><br>
 
 <div id="dateOutput" style="font-weight:bold;"></div><br>
 
-<label>Search Lenses</label>
-<input type="text" id="searchInput" placeholder="Search images by name or tag"><br><br>
 
 </div>
 </div>
@@ -747,314 +746,57 @@ document.addEventListener('DOMContentLoaded', () => {
 <div class="wrap">
 <div class="lens-container">
 
-<div class="sectionlens"><h6>Photochromic Single Vision, 7 days, Standard Stock </h6>
-
+<div class="sectionlens"><h6>Promotion Photochromic Single Vision</h6>
 
   <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/photochromic.jpg" alt="Photochromic" data-tags="basic" onclick="openLightbox(this.src)">
 </div>
 
+<div class="sectionlens"><h6>Promotion Blush Glasses</h6>
 
-
-
-<div class="sectionlens"><h6>Single Vision 1, Standard Stock </h6>
-
-<span class="search-only">
-Blue-Light Filter
-1.56 - RM 450
-1.61 - RM 600
-1.67 - RM 850
-1.74 - RM 1,150
-UV400
--
-1.61 - RM 520
-1.67 - RM 650
--
-Blue-Light Filter
-1.56 - RM 480
-1.61 - RM 550
-1.67 - RM 650
-1.74 - RM 880
-UV400
--
-1.61 - RM 380
-1.67 - RM 530
--
-2. Rayfilter Premium - 3 days
-From Taiwan, New Generation low reflection coating.
-3. Asahi-Lite - 3 days
-From Japan, Premium Aspheric, Thinner sides
-Photochromic
--
--
--
--
-Photochromic
-1.56 - RM 630 (V)
--
--
--
-Blue-Light Filter
-1.56 - RM 330
-1.61 - RM 430
-1.67 - RM 630
-1.74 - RM 880
-UV400
-1.56 - RM 250
-1.61 - RM 380
-1.67 - RM 530
--
-1. Rayfilter Basic - 3 days
-From Taiwan, mid-range value for money.
-Photochromic
-1.56 - RM 530
-1.61 - RM 680
-1.67 - RM 700
-1.74 - RM 950
-Blue-Light Filter
-1.56 - RM 450
-1.61 - RM 550
-1.67 - RM 650
-1.74 - RM 750
-UV400
--
--
--
--
-From Europe, Premium Sphere & Aspheric, Best of both combined
-Photochomic
-1.56 - RM 550
-1.61 - RM 750 (F)
-1.67 - RM 850 (F)
--
-4. Aether - 3 days
-</span>
-
-  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/1.jpg" alt="Price List 1" data-tags="basic" onclick="openLightbox(this.src)">
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/4.jpg" alt="Price List 4" data-tags="basic" onclick="openLightbox(this.src)">
 </div>
 
-<div class="sectionlens"><h6>Single Vision 2, Standard Stock, Custom Lens</h6>
-<span class="search-only">
-Blue-Light Filter
-1.56 - RM 680
-1.61 - RM 750
-1.67 - RM 1,080
-1.74 - RM 1,630
-UV400
-1.56 - RM 480
-1.61 - RM 630
-1.67 - RM 930
-1.74 - RM 1,430
-6. Rayfilter Custom - 7 days
-From Taiwan, simple customized single vision lenses.
-Photochromic
-1.56 - RM 730 
-1.61 - RM 980 
-1.67 - RM 1,380 
-1.74 - RM 1,930
-Blue-Light Filter
-1.56 - RM 850
-1.61 - RM 1,050
-1.67 - RM 1,450
--
-UV400
-1.56 - RM 700
-1.61 - RM 900
-1.67 - RM 1,300
--
-Ultimate Clear Zone from side to side!
-Photochomic
-1.56 - RM 1,350 (F)
-1.61 - RM 1,550 (F)
-1.67 - RM 1,950 (F)
--
-RX
-7. Pentax Custom - 7 days
-Blue-Light Filter
-1.56 - RM 770
-1.61 - RM 920
-1.67 - RM 1,120
-1.74 - RM 1,770
-UV400
-1.56 - RM 710
-1.61 - RM 860
-1.67 - RM 1,060
-1.74 - RM 1,710
-8. Aether Custom - 7 days
-iDrive technology, enhance night vision with coating & lens optics; night myopia
-Photochromic
-1.56 - RM 1,060 (F)
-1.61 - RM 1,360 (F)
-1.67 - RM 1,510 (F)
-1.74 - RM 2,360 (F)
-Blue-Light Filter
-1.56 - RM 480
-1.61 - RM 580
-1.67 - RM 840
-1.74 - RM 1,150
-UV400
--
--
--
--
-5. Pentax - 3 days
-From Japan, Premium Spherical, Stable peripheral vision. Slightly thicker.
-Photochromic
--
-1.61 - RM 730 (F)
--
--
-RX
-</span>
+<div class="sectionlens"><h6>Stock Single Vision</h6>
 
-  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/2.png" alt="Price List 2" data-tags="premium" onclick="openLightbox(this.src)">
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/1.jpg" alt="Price List 2" data-tags="premium" onclick="openLightbox(this.src)">
 </div>
 
-<div class="sectionlens"><h6>Single Vision 3, Relax Lens</h6>
+<div class="sectionlens"><h6>Custom Single Vision</h6>
 
-<span class="search-only">
-Blue-Light Filter
-1.56 - RM 1,000
-1.61 - RM 1,200
-1.67 - RM 1,500
-1.74 - RM 2,000
-UV400
-1.56 - RM 850
-1.61 - RM 1,050
-1.67 - RM 1,350
-1.74 - RM 1,850
-Ultimate Clear Zone from side to side!
-Photochomic
-1.56 - RM 1,550 (F)
-1.61 - RM 1,750 (F)
-1.67 - RM 2,050 (F)
--
-RX
-9. Pentax Relax - 7 days
-Blue-Light Filter
-1.56 - RM 930
-1.61 - RM 1,080
-1.67 - RM 1,430
-1.74 - RM 2,180
-UV400
-1.56 - RM 830
-1.61 - RM 980
-1.67 - RM 1,330
-1.74 - RM 1,980
-10. Ultimate Relax - 7 days
-From Germany, but their most premium optics
-Photochromic
-1.56 - RM 1,080
-1.61 - RM 1,330 
-1.67 - RM 1,830 
-1.74 - RM 2,480
-Blue-Light Filter
--
-1.61 - RM 2,450
-1.67 - RM 2,850
--
-UV400
-1.56 - RM 1,850
-1.61 - RM 2,250
-1.67 - RM 2,650
--
-12. Rodenstock Relax - 7 days
-From Germany, top notch lenses, long tradition of optics technology
-Photochromic
-1.56 - RM 2,650 (F)
-1.61 - RM 3,050 (F)
-1.67 - RM 3,450 (F)
--
-Blue-Light Filter
-1.56 - RM 1,400
-1.61 - RM 1,500
-1.67 - RM 1,900
-1.74 - RM 3,050
-UV400
-1.56 - RM 1,300
-1.61 - RM 1,450
-1.67 - RM 1,800
-1.74 - RM 2,850
-11. Meyer Relax - 7 days
-From Germany, top notch lenses, long tradition of optics technology
-Photochromic
-1.56 - RM 1,550
-1.61 - RM 1,800 
-1.67 - RM 2,300 
-1.74 - RM 3,250
-</span>
-
-  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/3.png" alt="Price List 3" data-tags="tinted" onclick="openLightbox(this.src)">
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/2.jpg" alt="Price List 3" data-tags="tinted" onclick="openLightbox(this.src)">
 </div>
 
-<div class="sectionlens"><h6>Single Vision 4, Ultra Optics</h6>
+<div class="sectionlens"><h6>Tinted Custom Single Vision</h6>
 
-<span class="search-only">
-Blue-Light Filter
-1.50 - RM 1,100
-1.61 - RM 1,300
-1.67 - RM 1,600
-1.74 - RM 2,250
-UV400
-1.50 - RM 950
-1.61 - RM 1,150
-1.67 - RM 1,450
-1.74 - RM 2,100
-Ultimate Clear Zone, super thin and reduce magnification.
-Photochomic
-1.50 - RM 1,850 (F)
-1.61 - RM 2,050 (F)
-1.67 - RM 2,350 (F)
--
-RX
-14. Pentax Double Aspheric - 7 days
-Blue-Light Filter
--
-1.61 - RM 3,150
-1.67 - RM 3,550
--
-UV400
-1.56 - RM 2,600
-1.61 - RM 2,950
-1.67 - RM 3,350
-1.74 - RM 4,850
-15. Rodenstock B.I.G. Norm Custom - 10 days
-From Germany, analyse biometric and produce exceptionally sharp vision.
-Photochromic
-1.56 - RM 3,400 
-1.61 - RM 3,750
-1.67 - RM 4,150
--
-Blue-Light Filter
--
-1.61 - RM 1,850
-1.67 - RM 2,250
--
-UV400
-1.56 - RM 1,250
-1.61 - RM 1,650
-1.67 - RM 2,050
--
-13. Rodenstock Custom - 7 days
-From Germany, top notch lenses, long tradition of optics technology
-Photochromic
-1.56 - RM 2,050 (F)
-1.61 - RM 2,450 (F)
-1.67 - RM 2,850 (F)
--
-</span>
-
-  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/4.png" alt="Price List 4" data-tags="basic" onclick="openLightbox(this.src)">
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/3.jpg" alt="Price List 3" data-tags="tinted" onclick="openLightbox(this.src)">
 </div>
 
-<div class="sectionlens"><h6>Sunglasses Lenses</h6>
+<div class="sectionlens"><h6>Fully Custom Progressive Lenses</h6>
 
   <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/5.jpg" alt="Price List 5" data-tags="basic" onclick="openLightbox(this.src)">
 </div>
 
-<div class="sectionlens"><h6>Sunglasses Lenses</h6>
+<div class="sectionlens"><h6>Semi Custom Progressive Lenses</h6>
 
   <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/6.jpg" alt="Price List 6" data-tags="basic" onclick="openLightbox(this.src)">
 </div>
+
+<div class="sectionlens"><h6>Semi Standard Progressive Lenses</h6>
+
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/7.jpg" alt="Price List 7" data-tags="basic" onclick="openLightbox(this.src)">
+</div>
+
+<div class="sectionlens"><h6>Standard Progressive Lenses</h6>
+
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/8.jpg" alt="Price List 8" data-tags="basic" onclick="openLightbox(this.src)">
+</div>
+
+<div class="sectionlens"><h6>Basic Progressive Lenses</h6>
+
+  <img src="https://raw.githubusercontent.com/kiaraoptometrypx/OL-selector/main/Lens_Catalogue/9.jpg" alt="Price List 9" data-tags="basic" onclick="openLightbox(this.src)">
+</div>
+
+
 
 </div>
 </div>
