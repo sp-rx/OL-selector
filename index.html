@@ -36,7 +36,7 @@ html, body{
 
 .hidden { display:none; }
 
-.wrap{width:90%; max-width:700px; margin:0 auto;}
+.wrap{width:100%; max-width:1030px; margin:0 auto;}
 
 .section{
   background:var(--pale);
@@ -586,6 +586,60 @@ PFLResult.innerHTML =
 
 </div>
 
+
+<h3>Lens Thickness Evaluation <br> <button style="width:465px; border-radius:10px" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button></h3>
+
+<script>
+function togglethickness(){
+  const els = document.querySelectorAll('.thickness');
+  
+  els.forEach(el=>{
+    if(el.style.display === 'none'){
+      el.style.display = 'block';
+    } else {
+      el.style.display = 'none';
+    }
+  });
+}
+</script>
+
+
+<div id="reContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:1000px; height:357px; overflow:hidden;">
+  
+  <img id="reImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
+
+  <span id="reOverlay" style="
+    position:absolute;
+    top:10px;
+    left:40px;
+    color:black;
+    font-size:14px;
+  ">
+    Right Eye Thickness
+  </span>
+
+</div>
+
+
+<div class="thickness" style="display:none; height:20px"></div>
+
+<div id="leContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:1000px; height:357px; overflow:hidden;">
+  
+  <img id="leImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
+
+  <span id="leOverlay" style="
+    position:absolute;
+    top:10px;
+    left:40px;
+    color:black;
+    font-size:14px;
+  ">
+    Left Eye Thickness
+  </span>
+
+</div>
+
+
 <div class="Ruler hidden section">
 	<h2>Ruler for PD, Frame height & so on.</h2>
   <button class="small" id="rotateBtn">Rotate 90°</button>
@@ -1028,7 +1082,88 @@ window.addEventListener("load", () => {
 
 
 
+<script>
+// ---------------- PRELOAD ----------------
+const allFiles = ['500','300','100','000','-200','-400','-600','-800','-1000','-1200'];
+const preloadedImages = {};
 
+function preloadImages(){
+  allFiles.forEach(file=>{
+    const img = new Image();
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/thickness-photo/${file}.jpg`;
+    preloadedImages[file] = img;
+  });
+}
+
+// ---------------- SE TABLE ----------------
+const seTable = {
+  '500':   { top: [4.75,5.0,5.25,5.5], bottom: [5.75,6.0,6.25,6.5] },
+  '300':   { top: [2.75,3.0,3.25,3.5], bottom: [3.75,4.0,4.25,4.5] },
+  '100':   { top: [0.75,1.0,1.25,1.5], bottom: [1.75,2.0,2.25,2.5] },
+  '000':   { top: [-0.25,0.0,0.25,0.5], bottom: [-0.75,-1.0,-1.25,-1.5] },
+  '-200':  { top: [-1.75,-2.0,-2.25,-2.5], bottom: [-2.75,-3.0,-3.25,-3.5] },
+  '-400':  { top: [-3.75,-4.0,-4.25,-4.5], bottom: [-4.75,-5.0,-5.25,-5.5] },
+  '-600':  { top: [-5.75,-6.0,-6.25,-6.5], bottom: [-6.75,-7.0,-7.25,-7.5] },
+  '-800':  { top: [-7.75,-8.0,-8.25,-8.5], bottom: [-8.75,-9.0,-9.25,-9.5] },
+  '-1000': { top: [-9.75,-10.0,-10.25,-10.5], bottom: [-10.75,-11.0,-11.25,-11.5] },
+  '-1200': { top: [-11.75,-12.0,-12.25,-12.5], bottom: [-12.75,-13.0,-13.25,-13.5] }
+};
+
+// ---------------- SE CALC ----------------
+function calcSE(s, c){
+  return s + c/2;
+}
+
+// ---------------- FIND MATCH ----------------
+function getFileHalf(se){
+  let closestFile = null;
+  let closestHalf = 'top';
+  let minDiff = Infinity;
+
+  for(const file in seTable){
+    ['top','bottom'].forEach(half=>{
+      seTable[file][half].forEach(val=>{
+        let diff = Math.abs(se - val);
+        if(diff < minDiff){
+          minDiff = diff;
+          closestFile = file;
+          closestHalf = half;
+        }
+      });
+    });
+  }
+  return { file: closestFile, half: closestHalf };
+}
+
+// ---------------- UPDATE LENS ----------------
+function updateLens(eye){
+  let sph = parseFloat(document.getElementById(eye==='RE'?'sphOD':'sphOS')?.value) || 0;
+  let cyl = parseFloat(document.getElementById(eye==='RE'?'cylOD':'cylOS')?.value) || 0;
+
+  let se = calcSE(sph, cyl);
+  let { file, half } = getFileHalf(se);
+  if(!file) return;
+
+  let imgElement = document.getElementById(eye==='RE'?'reImg':'leImg');
+  imgElement.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/thickness-photo/${file}.jpg`;
+  imgElement.style.objectPosition = `50% ${half==='top'?0:95}%`;
+}
+
+// ---------------- LISTENERS ----------------
+['sphOD','cylOD','sphOS','cylOS'].forEach(id=>{
+  document.getElementById(id)?.addEventListener('input',()=>{
+    updateLens('RE');
+    updateLens('LE');
+  });
+});
+
+// ---------------- INIT ----------------
+window.addEventListener('DOMContentLoaded',()=>{
+  preloadImages();
+  updateLens('RE');
+  updateLens('LE');
+});
+</script>
 
 
 
