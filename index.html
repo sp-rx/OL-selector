@@ -194,9 +194,11 @@ button:active{transform:translateY(1px);}
   <input style="width:10%" id="cylOD" type="text" placeholder="0.00">
 
 &nbsp;&nbsp;&nbsp;
-<select style="width:150px; height:30px; border-radius:6px; border:1px solid grey" id="addPower">
+<select style="font-size:11px; width:20%; height:30px; border-radius:6px; border:1px solid grey" id="addPower">
   <option value="">No Add</option>
-  <option value="150">+0.75 to +1.50</option>
+  <option value="075">+0.25 to +0.75</option>
+  <option value="125">+1.00 to +1.25</option>
+  <option value="150">+1.00 to +1.50</option>
   <option value="200">+1.75 to +2.00</option>
   <option value="225">+2.00 to +2.25</option>
   <option value="275">+2.50 to +2.75</option>
@@ -553,28 +555,31 @@ PFLResult.innerHTML =
 
 <div class="Diameter hidden section" style="border:none">
 <div>
-<h3>
-Diameter Check!<br>Important for Plus Powers & Reading glasses! Wrong diameter = Dizzy!<br>Center PD along the red line; Dashed lines must be bigger than frame's shape. </h3>
+<span style="font-size:15px"><b> Important! Check if lens size fit! </b> </span>
+<div style="display:none">
   <!-- Buttons -->
   <button class="circleBtn small" onclick="setCircleSize(312, this)">60 mm stock</button>
   <button class="circleBtn small" onclick="setCircleSize(338, this)">65 mm stock</button>
   <button class="circleBtn small" onclick="setCircleSize(364, this)">70 mm RX</button>
   <button class="circleBtn small" onclick="setCircleSize(390, this)">75 mm RX</button>
 </div>
+  <button style="background-color:red" class="circleBtn small" onclick="setCircleSize(338, this)">65 mm stock</button>
+
+</div>
 
 
 
 <!-- Circle container -->
 <div style="margin-top:2%; padding:5%; display:flex; justify-content:center; align-items:center;">
-<div id="circleContainer" style="display:flex; justify-content:center; align-items:center; border:none; width:32px; height:312px; margin-top:10px;">
+<div id="circleContainer" style="position: relative; width: 312px; height: 312px; margin-top: 10px;">
   <svg id="circleSVG" width="100%" height="100%" viewBox="0 0 300 300" style="display:block;">
-    <circle cx="169" cy="169" r="169" stroke="red" stroke-width="1" fill="none"   stroke-dasharray="10 2"
-/>
-    <line class="vert" x1="190" y1="0" x2="169" y2="312" stroke-width="1" />
-    <line class="hori" x1="0" y1="169" x2="312" y2="169" stroke-width="1" />
+    <circle cx="150" cy="150" r="140" stroke="red" stroke-width="1" fill="none" stroke-dasharray="2 2"/>
+    <line class="vert" x1="150" y1="15" x2="150" y2="285" stroke-width="1" stroke-dasharray="1 1"/>
+    <line class="hori" x1="0" y1="150" x2="300" y2="150" stroke-width="1" />
   </svg>
-
-
+  <span style="color:red" id="circleLabel" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+       Align PD along this line<br>then check all edges.<br>Make sure they<br>fit inside the red circle.
+  </span>
 </div>
 </div>
 
@@ -691,6 +696,18 @@ function setCircleSize(size, btn) {
   const lines = svg.querySelectorAll('line');
   const center = innerSize / 2;
 
+const label = document.getElementById('circleLabel');
+
+// place span at the center
+label.style.position = 'absolute';
+label.style.left = center + 'px';
+label.style.top = center + 'px';
+label.style.transform = 'translate(-95%, -45%)'; // truly center the span
+
+// optional: fine-tune with offsets
+label.style.left = (center + offsetX) + 'px';
+label.style.top = (center + offsetY) + 'px';
+
   circle.setAttribute('cx', center);
   circle.setAttribute('cy', center);
   circle.setAttribute('r', center);
@@ -712,7 +729,7 @@ function setCircleSize(size, btn) {
 
 document.addEventListener('DOMContentLoaded', () => {
   const firstButton = document.querySelector('.circleBtn');
-  if (firstButton) setCircleSize(312, firstButton);
+  if (firstButton) setCircleSize(338, firstButton);
 });
 </script>
 
@@ -738,9 +755,9 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="multifocalLensContainer"></div>
 </div>
 
-
-
-
+<div class="sectionlens">
+  <div id="antiFatigueLensContainer"></div>
+</div>
 
 
 
@@ -815,6 +832,12 @@ function getMFImage(index){
   return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${index.replace(".","")}_add${add}.jpg`;
 }
 
+// ----------- AF HELPER (ADDED ONLY) -----------
+function getAFImage(index, add){
+  if (!index || index === "N/A") return null;
+  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/af${index.replace(".","")}_add${add}.jpg`;
+}
+
 // ---------------- RENDER ----------------
 function showSVImages(normalIndex, customIndex){
   const normalContainer = document.getElementById("normalLensContainer");
@@ -823,7 +846,6 @@ function showSVImages(normalIndex, customIndex){
   normalContainer.innerHTML = "";
   customContainer.innerHTML = "";
 
-  // NORMAL
   if (normalIndex === "N/A") {
     normalContainer.textContent = "RX not available; out of range.";
   } else {
@@ -834,7 +856,6 @@ function showSVImages(normalIndex, customIndex){
     normalContainer.appendChild(img);
   }
 
-  // CUSTOM
   if (customIndex === "N/A") {
     customContainer.textContent = "RX not available; custom required.";
   } else {
@@ -846,13 +867,18 @@ function showSVImages(normalIndex, customIndex){
   }
 }
 
+// ---------------- MF ----------------
 function showMFImage(customIndex){
   const container = document.getElementById("multifocalLensContainer");
   container.innerHTML = "";
 
   const add = document.getElementById("addPower").value;
 
-  if (!add) return;
+  // MF only works for 150+
+  if (!add || add === "075" || add === "125") {
+    container.textContent = "Multifocal option not available.";
+    return;
+  }
 
   if (customIndex === "N/A") {
     container.textContent = "Multifocal RX not available.";
@@ -862,7 +888,6 @@ function showMFImage(customIndex){
   const img = document.createElement("img");
   img.src = getMFImage(customIndex);
 
-  // ✅ PUT IT HERE
   img.onerror = () => {
     container.textContent = "Multifocal option not available.";
   };
@@ -874,13 +899,46 @@ function showMFImage(customIndex){
   container.appendChild(img);
 }
 
+// ---------------- AF ----------------
+function showAFImages(customIndex){
+  const container = document.getElementById("antiFatigueLensContainer");
+  container.innerHTML = "";
+
+  const add = document.getElementById("addPower").value;
+
+  // Only show AF if add is 075 or 125
+  if (!customIndex || customIndex === "N/A" || (add !== "075" && add !== "125")) {
+    container.textContent = "Anti-fatigue option not available.";
+    return;
+  }
+
+  // Only create ONE image for the selected add
+  const img = document.createElement("img");
+  img.src = getAFImage(customIndex, add);
+
+  img.onerror = () => {
+    container.textContent = "Anti-fatigue option not available.";
+  };
+
+  img.style.width = "100%";
+  img.style.cursor = "pointer";
+  img.onclick = () => openLightbox(img.src);
+
+  container.appendChild(img);
+}
+
+
+
+
+
 // ---------------- MAIN ----------------
-function updateRecommendation(){
+function updateRecommendation() {
   const sphOD = parseFloat(document.getElementById("sphOD").value) || 0;
   const cylOD = parseFloat(document.getElementById("cylOD").value) || 0;
   const sphOS = parseFloat(document.getElementById("sphOS").value) || 0;
   const cylOS = parseFloat(document.getElementById("cylOS").value) || 0;
 
+  // --- calculate SV / custom indexes ---
   const normalOD = calcIndex(sphOD, cylOD, "normal");
   const normalOS = calcIndex(sphOS, cylOS, "normal");
   const customOD = calcIndex(sphOD, cylOD, "custom");
@@ -894,10 +952,25 @@ function updateRecommendation(){
 
   document.getElementById("indexResult").innerHTML = customIndex;
 
+  // --- show images ---
   showSVImages(normalIndex, customIndex);
-  showMFImage(customIndex);
-}
 
+  const add = document.getElementById("addPower").value;
+
+  // --- Multifocal logic: only for 150+ adds ---
+  if (!add || add === "075" || add === "125") {
+    document.getElementById("multifocalLensContainer").textContent = "Multifocal option not available.";
+  } else {
+    showMFImage(customIndex);
+  }
+
+  // --- Anti-fatigue logic: only for 075 / 125 adds ---
+  if (!add || (add !== "075" && add !== "125")) {
+    document.getElementById("antiFatigueLensContainer").textContent = "Anti-fatigue option not available.";
+  } else {
+    showAFImages(customIndex);
+  }
+}
 // ---------------- EVENTS ----------------
 ["sphOD","cylOD","sphOS","cylOS"].forEach(id =>
   document.getElementById(id).addEventListener("input", updateRecommendation)
@@ -917,20 +990,26 @@ function buildAllImageURLs(){
 
   const indexes = ["156","161","167","174"];
   const adds = ["150","200","225","275","325"];
+  const afAdds = ["075","125"]; // ONLY ADD
 
   const urls = [];
 
-  // SV (normal + custom)
   ["n","c"].forEach(prefix => {
     indexes.forEach(idx => {
       urls.push(`${base}${prefix}${idx}.jpg`);
     });
   });
 
-  // MF
   indexes.forEach(idx => {
     adds.forEach(add => {
       urls.push(`${base}mf${idx}_add${add}.jpg`);
+    });
+  });
+
+  // AF ONLY ADD
+  indexes.forEach(idx => {
+    afAdds.forEach(add => {
+      urls.push(`${base}af${idx}_add${add}.jpg`);
     });
   });
 
@@ -945,8 +1024,6 @@ window.addEventListener("load", () => {
   updateRecommendation();
 });
 </script>
-
-
 
 
 
