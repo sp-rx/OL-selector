@@ -937,12 +937,12 @@ function showMFImage(customIndex){
 
   // MF only works for 150+
   if (!add || add === "075" || add === "125") {
-    container.textContent = "Multifocal option not available.";
+    container.textContent = "Multi-focal option not available.";
     return;
   }
 
   if (customIndex === "N/A") {
-    container.textContent = "Multifocal RX not available.";
+    container.textContent = "Multi-focal RX not available.";
     return;
   }
 
@@ -950,7 +950,7 @@ function showMFImage(customIndex){
   img.src = getMFImage(customIndex);
 
   img.onerror = () => {
-    container.textContent = "Multifocal option not available.";
+    container.textContent = "Multi-focal option not available.";
   };
 
   img.style.width = "100%";
@@ -1020,7 +1020,7 @@ function updateRecommendation() {
 
   // --- Multifocal logic: only for 150+ adds ---
   if (!add || add === "075" || add === "125") {
-    document.getElementById("multifocalLensContainer").textContent = "Multifocal option not available.";
+    document.getElementById("multifocalLensContainer").textContent = "Multi-focal option not available.";
   } else {
     showMFImage(customIndex);
   }
