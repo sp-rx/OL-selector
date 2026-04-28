@@ -105,7 +105,7 @@ body::after {
 }
 
 .header-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM+Serif+Display', serif;
   font-size: 2.6rem;
   font-weight: 300;
   letter-spacing: -0.02em;
@@ -158,7 +158,7 @@ body::after {
 }
 
 .section-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM+Serif+Display', serif;
   font-size: 1.45rem;
   font-weight: 400;
   color: var(--forest);
@@ -176,7 +176,7 @@ body::after {
 }
 
 .index-result {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM+Serif+Display', serif;
   font-style: italic;
   color: var(--gold);
   font-size: 1.6rem;
@@ -457,7 +457,7 @@ th {
 
 /* ── RESULT TEXT ── */
 .result, #output, #PFLResult, #dateOutput {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'DM+Serif+Display', serif;
   font-size: 1.1rem;
   font-weight: 400;
   color: var(--forest);
@@ -817,10 +817,10 @@ th {
 
   <!-- LENS CARDS -->
   <div class="lens-container">
-    <div class="sectionlens"><div id="multifocalLensContainer" style="padding:14px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--forest-l)"></div></div>
-    <div class="sectionlens"><div id="antiFatigueLensContainer" style="padding:14px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--forest-l)"></div></div>
-    <div class="sectionlens"><div id="normalLensContainer" style="padding:14px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--forest-l)"></div></div>
-    <div class="sectionlens"><div id="customLensContainer" style="padding:14px; font-family:'Cormorant Garamond',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens"><div id="multifocalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens"><div id="antiFatigueLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens"><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
   </div>
 
 </div><!-- /wrap -->
@@ -902,7 +902,7 @@ function showSVImages(normalIndex, customIndex){
   normalContainer.innerHTML = "";
   customContainer.innerHTML = "";
   if (normalIndex === "N/A") {
-    normalContainer.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
+    normalContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
   } else {
     const img = document.createElement("img");
     img.src = getSVImage("normal", normalIndex);
@@ -911,7 +911,7 @@ function showSVImages(normalIndex, customIndex){
     normalContainer.appendChild(img);
   }
   if (customIndex === "N/A") {
-    customContainer.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Custom RX required</span>';
+    customContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Custom RX required</span>';
   } else {
     const img = document.createElement("img");
     img.src = getSVImage("custom", customIndex);
@@ -926,16 +926,16 @@ function showMFImage(customIndex){
   container.innerHTML = "";
   const add = document.getElementById("addPower").value;
   if (!add || add === "075" || add === "125") {
-    container.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
     return;
   }
   if (customIndex === "N/A") {
-    container.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
     return;
   }
   const img = document.createElement("img");
   img.src = getMFImage(customIndex);
-  img.onerror = () => { container.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not available</span>'; };
+  img.onerror = () => { container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not available</span>'; };
   img.style.width = "100%";
   img.style.cursor = "pointer";
   img.onclick = () => openLightbox(img.src);
@@ -947,12 +947,12 @@ function showAFImages(customIndex){
   container.innerHTML = "";
   const add = document.getElementById("addPower").value;
   if (!customIndex || customIndex === "N/A" || (add !== "075" && add !== "125")) {
-    container.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
     return;
   }
   const img = document.createElement("img");
   img.src = getAFImage(customIndex, add);
-  img.onerror = () => { container.innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not available</span>'; };
+  img.onerror = () => { container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not available</span>'; };
   img.style.width = "100%";
   img.style.cursor = "pointer";
   img.onclick = () => openLightbox(img.src);
@@ -976,12 +976,12 @@ function updateRecommendation() {
   showSVImages(normalIndex, customIndex);
   const add = document.getElementById("addPower").value;
   if (!add || add === "075" || add === "125") {
-    document.getElementById("multifocalLensContainer").innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
+    document.getElementById("multifocalLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
   } else {
     showMFImage(customIndex);
   }
   if (!add || (add !== "075" && add !== "125")) {
-    document.getElementById("antiFatigueLensContainer").innerHTML = '<span style="font-family:\'Cormorant Garamond\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
+    document.getElementById("antiFatigueLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
   } else {
     showAFImages(customIndex);
   }
