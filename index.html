@@ -5,25 +5,35 @@
 <title>Kiara Optometry — Lens Selector</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --forest:   #0b3d2e;
-  --forest-d: #072a1f;
-  --forest-l: #145a43;
-  --gold:     #c8a96e;
-  --gold-l:   #e2c898;
-  --cream:    #f5f0e8;
-  --paper:    #faf8f4;
-  --ink:      #1a1a18;
-  --mist:     rgba(11,61,46,0.06);
-  --line:     rgba(200,169,110,0.25);
-  --glass:    rgba(250,248,244,0.72);
-  --shadow:   0 4px 32px rgba(11,61,46,0.10), 0 1px 4px rgba(11,61,46,0.06);
-  --shadow-l: 0 2px 12px rgba(11,61,46,0.07);
-  --radius:   14px;
-  --radius-s: 8px;
+--forest:   #303030;   /* black */
+--forest-d: #B3B3B3;   /* dark grey */
+--forest-l: #d8d8d8;   /* grey */
+
+--gold:     #ff0000;   /* red */
+--gold-l:   #0000ff;   /* blue */
+
+--cream:    #d8d8d8;   /* blue */
+--paper:    #f2f2f2;   /* light grey */
+
+--ink:      #303030;   /* black */
+
+--mist:     rgba(0,0,0,0.06);
+--line:     rgba(0,0,0,0.25);
+--glass:    rgba(255,255,255,0.72);
+
+--shadow:   0 4px 32px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+--shadow-l: 0 2px 12px rgba(0,0,0,0.07);
+
+--radius:   14px;
+--radius-s: 8px;
+}
+
+* {
+  font-family: 'DM Sans',-serif !important;
+  font-style: normal !important;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,13 +44,14 @@ html {
 }
 
 body {
-  background: var(--paper);
+  background: white;
   color: var(--ink);
   font-family: 'DM Sans', sans-serif;
   font-weight: 300;
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
+  background:
 }
 
 /* Grain texture overlay */
@@ -48,11 +59,10 @@ body::before {
   content: '';
   position: fixed;
   inset: 0;
+  background: url('https://github.com/sp-rx/OL-selector/blob/main/bg.jpg?raw=true') center/cover no-repeat;
+  opacity: 0.7;
   pointer-events: none;
-  z-index: 9000;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
-  background-size: 128px;
+  z-index: 0;
 }
 
 /* Background decorative element */
@@ -64,9 +74,10 @@ body::after {
   width: 600px;
   height: 600px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(200,169,110,0.06) 0%, transparent 70%);
   pointer-events: none;
   z-index: 0;
+
+
 }
 
 .wrap {
@@ -80,9 +91,9 @@ body::after {
 
 /* ── HEADER ── */
 .site-header {
-  padding: 48px 0 32px;
+  padding: 24px 0 24px;
   border-bottom: 1px solid var(--line);
-  margin-bottom: 36px;
+  margin-bottom: 12px;
   display: flex;
   align-items: flex-end;
   justify-content: space-between;
@@ -142,7 +153,7 @@ body::after {
 
 /* ── CARDS / SECTIONS ── */
 .section {
-  background: var(--glass);
+  background: var(--paper);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid var(--line);
@@ -189,7 +200,7 @@ label {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--forest-l);
+  color: var(--forest);
   margin-bottom: 6px;
   margin-top: 14px;
 }
@@ -236,7 +247,7 @@ textarea { min-height: 48px; resize: vertical; }
   font-size: 10px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--forest-l);
+  color: var(--ink);
   min-width: 120px;
   margin: 0;
   font-weight: 500;
@@ -301,7 +312,9 @@ button.normal::before {
 }
 
 button.normal:hover {
-  background: var(--forest-l);
+  background: var(--forest-d);
+  color: black;
+
   border-color: var(--gold);
   box-shadow: 0 4px 16px rgba(11,61,46,0.2);
   transform: translateY(-1px);
@@ -312,7 +325,6 @@ button.normal:active { transform: translateY(0); box-shadow: none; }
 
 button.small {
   background: transparent;
-  color: var(--forest);
   border: 1px solid var(--line);
   padding: 7px 14px;
 }
@@ -365,7 +377,7 @@ button[style*="background-color:#191919"] {
 }
 
 .sectionlens {
-  background: var(--glass);
+  background: var(--paper);
   border: 1px solid var(--line);
   border-radius: var(--radius);
   padding: 0;
@@ -395,7 +407,7 @@ button[style*="background-color:#191919"] {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(7,42,31,0.92);
+  background: var(--forest-1);
   backdrop-filter: blur(8px);
   display: none;
   justify-content: center;
@@ -532,29 +544,45 @@ th {
   button.normal { width: 100%; min-width: unset; }
 }
 
+.hidden {
+  display: none !important;
+}
+
 </style>
 </head>
 
 <body>
-<div style="height:60px"></div>
+<div style="height:150px"></div>
 
 <div class="wrap">
 
+<div class="section">
   <!-- HEADER -->
   <header class="site-header">
     <div class="header-brand">
-      <span class="header-eyebrow">Kiara Optometry</span>
-      <h1 class="header-title">Ophthalmic Lens <em>Selector</em></h1>
+      <h1 class="header-title">Vector Refraction with<br> <em>Freeform Ultimate Germany</em></h1>
+      <br>
+<span class="header-eyebrow">
+See clearer, no headaches, no dizziness, no discomforts.</span>
+<span class="header-eyebrow">Specially incorporated with binocular balancing calculations.</span>
+<br>
     </div>
+
+
     <div class="header-ornament">
       <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 12.5a5 5 0 110-10 5 5 0 010 10zm0-8a3 3 0 100 6 3 3 0 000-6z"/></svg>
     </div>
   </header>
 
+
+</div>
+
   <!-- WEARER DETAILS -->
   <div class="section">
-    <h2 class="section-title">Wearer's Details</h2>
+    <h2 class="section-title">Wearer's Details <button class="normal" onclick="toggleHideShow('myBlock')">Toggle Whatsapp</button>
+</h2>
 
+<div class="myBlock hidden">
     <label>Full Name</label>
     <input style="width:100%" id="name" type="text" placeholder="Patient name">
 
@@ -568,11 +596,13 @@ th {
       <button class="normal" id="greetBtn">Greetings</button>
       <button class="normal" id="sendBtn">Send WhatsApp</button>
     </div>
+<div style="height:25px"></div>
+
   </div>
+<div style="height:5px"></div>
+
 
   <!-- INDEX RECOMMENDER -->
-  <div class="section">
-    <h2 class="section-title">Index Recommender &nbsp;<span class="index-result" id="indexResult"></span></h2>
 
     <div class="rx-row">
       <span class="rx-label">Prescription</span>
@@ -587,6 +617,8 @@ th {
   <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',1)">+</button> 
 
     </div>
+
+
 
     <div style="display:none" class="rx-row">
       <span class="rx-label">Left Eye (OS)</span>
@@ -627,7 +659,11 @@ function stepAdd(dir){
 }
 </script>
 
+
+
 </div>
+
+    <h2 class="section-title">Index Recommender &nbsp;<span class="index-result" id="indexResult"></span></h2>
 
     <!-- hidden sections preserved -->
     <div class="section" style="display:none">
@@ -740,13 +776,14 @@ function stepAdd(dir){
       </div>
     </div>
 
-    <div style="display:none">
-      <button class="normal" onclick="toggleRuler()">Toggle Ruler</button>
-      <button class="normal" onclick="toggleDiameter()">Diameter Check</button>
+    <div>
+      <button style="display:none" class="normal" onclick="toggleRuler()">Toggle Ruler</button>
+      <button style="display:none" class="normal" onclick="toggleDiameter()">Diameter Check</button>
     </div>
 
     <!-- Diameter -->
-    <div class="Diameter hidden section" style="border:none">
+    <div style="border:none">
+ <div style="display:none">
       <div>
         <span style="font-size:15px"><b>Important! Check if lens size fit!</b></span>
         <div style="display:none">
@@ -769,7 +806,8 @@ function stepAdd(dir){
           </span>
         </div>
       </div>
-      <h3>Lens Thickness Evaluation</h3>
+</div>
+
       <h3><button class="normal" style="font-size:10px; width:327px; height:40px; border-radius:10px;" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button></h3>
       <script>
       function togglethickness(){
@@ -778,15 +816,17 @@ function stepAdd(dir){
         });
       }
       </script>
-      <div id="reContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
+      <div id="reContainer" class="thickness" style="margin-top:20px; display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
         <img id="reImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
-        <span id="reOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Right Eye Thickness</span>
+        <span id="reOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Thickness Estimator</span>
       </div>
       <div class="thickness" style="display:none; height:20px"></div>
+<div style="display:none">
       <div id="leContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
         <img id="leImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
         <span id="leOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Left Eye Thickness</span>
       </div>
+</div>
     </div>
 
     <!-- Ruler -->
@@ -935,7 +975,7 @@ function showSVImages(normalIndex, customIndex){
   normalContainer.innerHTML = "";
   customContainer.innerHTML = "";
   if (normalIndex === "N/A") {
-    normalContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
+    normalContainer.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
   } else {
     const img = document.createElement("img");
     img.src = getSVImage("normal", normalIndex);
@@ -959,11 +999,11 @@ function showMFImage(customIndex){
   container.innerHTML = "";
   const add = document.getElementById("addPower").value;
   if (!add || add === "075" || add === "125") {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Multi-focal not applicable</span>';
     return;
   }
   if (customIndex === "N/A") {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">RX out of range</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
     return;
   }
   const img = document.createElement("img");
@@ -980,7 +1020,7 @@ function showAFImages(customIndex){
   container.innerHTML = "";
   const add = document.getElementById("addPower").value;
   if (!customIndex || customIndex === "N/A" || (add !== "075" && add !== "125")) {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
+    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Anti-fatigue not applicable</span>';
     return;
   }
   const img = document.createElement("img");
@@ -1009,12 +1049,12 @@ function updateRecommendation() {
   showSVImages(normalIndex, customIndex);
   const add = document.getElementById("addPower").value;
   if (!add || add === "075" || add === "125") {
-    document.getElementById("multifocalLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not applicable</span>';
+    document.getElementById("multifocalLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Multi-focal not applicable</span>';
   } else {
     showMFImage(customIndex);
   }
   if (!add || (add !== "075" && add !== "125")) {
-    document.getElementById("antiFatigueLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not applicable</span>';
+    document.getElementById("antiFatigueLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Anti-fatigue not applicable</span>';
   } else {
     showAFImages(customIndex);
   }
@@ -1288,6 +1328,14 @@ function stepSph(id, step){
   // 🔥 trigger everything that might be listening
   el.dispatchEvent(new Event('input', { bubbles: true }));
   el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+</script>
+
+<script>
+function toggleHideShow(className) {
+  document.querySelectorAll('.' + className).forEach(el => {
+    el.classList.toggle('hidden');
+  });
 }
 </script>
 
