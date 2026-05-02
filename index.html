@@ -645,6 +645,9 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   <button class="normal" style="height:25px; padding:5px 15px" type="button" onclick="stepAdd(-1)">-</button>
   <button class="normal" style="height:25px; padding:5px 15px" type="button" onclick="stepAdd(1)">+</button>
 
+<button class="normal" style="height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">See Multifocals only</button>
+
+
 <script>
 function stepAdd(dir){
   const select = document.getElementById("addPower");
@@ -663,6 +666,7 @@ function stepAdd(dir){
 
 
 </div>
+
 <div style="height:30px"></div>
 <div style="display:none">
     <h2 class="section-title">Index Recommender &nbsp;<span class="index-result" id="indexResult"></span></h2>
@@ -811,7 +815,11 @@ function stepAdd(dir){
       </div>
 </div>
 
-      <h3><button class="normal" style="width:327px; height:40px; border-radius:10px;" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button></h3>
+ <h3><button class="normal" style="width:327px; height:40px; border-radius:10px;" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button> 
+
+</h3>
+
+
       <script>
       function togglethickness(){
         document.querySelectorAll('.thickness').forEach(el=>{
@@ -891,14 +899,24 @@ function stepAdd(dir){
 
   <!-- LENS CARDS -->
   <div class="lens-container">
-    <div class="sectionlens"><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
-    <div class="sectionlens"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens mfonly" style="min-height:535px" ><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
-    <div class="sectionlens"><div id="antiFatigueLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+    <div class="sectionlens mfonly"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+
+    <div class="sectionlens" style="min-height:535px"><div id="antiFatigueLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
     <div class="sectionlens"><div id="multifocalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
   </div>
+
+<script>
+function togglemfonly(cls) {
+  const els = document.querySelectorAll('.' + cls);
+  els.forEach(el => {
+    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+  });
+}
+</script>
 
 </div><!-- /wrap -->
 
