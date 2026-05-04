@@ -1147,7 +1147,7 @@ function buildAllImageURLs(){
   const adds = ["150","200","225","275","325"];
   const afAdds = ["075","125"];
   const urls = [];
-  ["n","c"].forEach(prefix => { indexes.forEach(idx => { urls.push(`${base}${prefix}${idx}.jpg`); }); });
+  ["n","c"].forEach(prefix => { indexes.forEach(idx => { urls.push(`${base}${prefix}${idx}.png`); }); });
   indexes.forEach(idx => { adds.forEach(add => { urls.push(`${base}mf${idx}_add${add}.jpg`); }); });
   indexes.forEach(idx => { afAdds.forEach(add => { urls.push(`${base}af${idx}_add${add}.jpg`); }); });
   return urls;
