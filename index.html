@@ -1029,7 +1029,7 @@ function calcIndex(sph, cyl, type) {
 function getSVImage(type, index){
   if (!index || index === "N/A") return null;
   const prefix = type === "normal" ? "n" : "c";
-  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/${prefix}${index.replace(".","")}.jpg`;
+  return `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/${prefix}${index.replace(".","")}.png`;
 }
 
 function getMFImage(index){
