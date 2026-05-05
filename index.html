@@ -633,16 +633,12 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
     <div class="rx-row">
       <span class="rx-label">Add Prescription</span>
-  <select id="addPower" style="max-width:80px; font-size:9px">
+<select id="addPower" style="max-width:80px; font-size:9px">
   <option value="">No Add Power</option>
-  <option value="075">Relax Lens +1.00 Normal Near</option>
-  <option value="125">Relax Lens +1.00 Wide Near</option>
-  <option value="150">Prog Lens +1.50 40 cm</option>
-  <option value="225">Prog Lens +1.50 Wide Near</option>
-
-  <option value="200">Prog Lens +2.00 40 cm</option>
-  <option value="275">Prog Lens +2.00 Wide Near</option>
-  <option value="325">Prog Lens +2.50 Wide Near</option>
+  <option value="100">+0.00 to +1.00</option>
+  <option value="150">+1.00 to +1.50</option>
+  <option value="200">+1.50 to +2.00</option>
+  <option value="250">+2.00 to +2.50</option>
 </select>
 
 
@@ -654,17 +650,13 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 <script>
 function stepAdd(dir) {
   const select = document.getElementById("addPower");
-  const options = select.options;
-
   let i = select.selectedIndex;
 
-  do {
-    i += dir;
+  i += dir;
 
-    if (i < 0) i = options.length - 1;
-    if (i >= options.length) i = 0;
-
-  } while (false); // no filtering anymore
+  // clamp (NO LOOP)
+  if (i < 0) i = 0;
+  if (i >= select.options.length) i = select.options.length - 1;
 
   select.selectedIndex = i;
   select.dispatchEvent(new Event('change'));
@@ -912,20 +904,28 @@ function stepAdd(dir) {
 
     <div class="sectionlens mfonly"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
 
-    <div class="sectionlens" style="min-height:500px">
-<div id="antiFatigueLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
-
-    <div class="sectionlens">
-<div id="multifocalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfWideContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
 
   </div>
 
 <script>
-function togglemfonly(cls) {
-  const els = document.querySelectorAll('.' + cls);
-  els.forEach(el => {
-    el.style.display = (el.style.display === 'none') ? 'block' : 'none';
+function toggleMFVisibility() {
+  const hasAdd = document.getElementById("addPower").value !== "";
+
+  // Hide/show SINGLE VISION
+  document.querySelectorAll('.mfonly').forEach(el => {
+    el.style.display = hasAdd ? 'none' : 'block';
+  });
+
+  // Hide/show MULTIFOCAL
+  document.querySelectorAll('.mfshow').forEach(el => {
+    el.style.display = hasAdd ? 'block' : 'none';
   });
 }
 </script>
@@ -1030,89 +1030,95 @@ function showSVImages(normalIndex, customIndex){
   }
 }
 
-function showMFImage(customIndex){
-  const container = document.getElementById("multifocalLensContainer");
-  container.innerHTML = "";
+function showMFPair(customIndex){
+  const normalDiv = document.getElementById("mfNormalContainer");
+  const wideDiv   = document.getElementById("mfWideContainer");
+
+  normalDiv.innerHTML = "";
+  wideDiv.innerHTML = "";
+
   const add = document.getElementById("addPower").value;
-  if (!add || add === "075" || add === "125") {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Multi-focal not applicable</span>';
-    return;
+  if (!add || customIndex === "N/A") return;
+
+  // 🔥 map to pair
+const map = {
+  "100": ["075","125"],
+  "150": ["150","200"],
+  "200": ["175","225"],
+  "250": [275,"325"]
+};
+
+  const pair = map[add];
+  if (!pair) return;
+
+  const [normalAdd, wideAdd] = pair;
+
+  // NORMAL
+  if (normalAdd){
+    const img = document.createElement("img");
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${customIndex.replace(".","")}_add${normalAdd}.jpg`;
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    normalDiv.appendChild(img);
+  } else {
+    normalDiv.innerHTML = '<span style="padding:14px; display:block">Not available</span>';
   }
-  if (customIndex === "N/A") {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
-    return;
+
+  // WIDE
+  if (wideAdd){
+    const img = document.createElement("img");
+    img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf${customIndex.replace(".","")}_add${wideAdd}.jpg`;
+    img.style.width = "100%";
+    img.onclick = () => openLightbox(img.src);
+    wideDiv.appendChild(img);
+  } else {
+    wideDiv.innerHTML = '<span style="padding:14px; display:block">Not available</span>';
   }
-  const img = document.createElement("img");
-  img.src = getMFImage(customIndex);
-  img.onerror = () => { container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Multi-focal not available</span>'; };
-  img.style.width = "100%";
-  img.style.cursor = "pointer";
-  img.onclick = () => openLightbox(img.src);
-  container.appendChild(img);
 }
 
-function showAFImages(customIndex){
-  const container = document.getElementById("antiFatigueLensContainer");
-  container.innerHTML = "";
-  const add = document.getElementById("addPower").value;
-  if (!customIndex || customIndex === "N/A" || (add !== "075" && add !== "125")) {
-    container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Anti-fatigue not applicable</span>';
-    return;
-  }
-  const img = document.createElement("img");
-  img.src = getAFImage(customIndex, add);
-  img.onerror = () => { container.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest-l); padding:14px; display:block">Anti-fatigue not available</span>'; };
-  img.style.width = "100%";
-  img.style.cursor = "pointer";
-  img.onclick = () => openLightbox(img.src);
-  container.appendChild(img);
-}
 
 function updateRecommendation() {
   const sphOD = parseFloat(document.getElementById("sphOD").value) || 0;
   const cylOD = parseFloat(document.getElementById("cylOD").value) || 0;
   const sphOS = parseFloat(document.getElementById("sphOS").value) || 0;
   const cylOS = parseFloat(document.getElementById("cylOS").value) || 0;
+
   const normalOD = calcIndex(sphOD, cylOD, "normal");
   const normalOS = calcIndex(sphOS, cylOS, "normal");
   const customOD = calcIndex(sphOD, cylOD, "custom");
   const customOS = calcIndex(sphOS, cylOS, "custom");
+
   const normalIndex = (normalOD === "N/A" || normalOS === "N/A") ? "N/A" :
     ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === normalOD || i === normalOS);
+
   const customIndex = (customOD === "N/A" || customOS === "N/A") ? "N/A" :
     ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === customOD || i === customOS);
+
   document.getElementById("indexResult").innerHTML = customIndex || "—";
+
   showSVImages(normalIndex, customIndex);
-  const add = document.getElementById("addPower").value;
-  if (!add || add === "075" || add === "125") {
-    document.getElementById("multifocalLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Multi-focal not applicable</span>';
-  } else {
-    showMFImage(customIndex);
-  }
-  if (!add || (add !== "075" && add !== "125")) {
-    document.getElementById("antiFatigueLensContainer").innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">Anti-fatigue not applicable</span>';
-  } else {
-    showAFImages(customIndex);
-  }
+
+  // ✅ ONLY THIS
+showMFPair(customIndex);
+toggleMFVisibility();
 }
+
 
 ["sphOD","cylOD","sphOS","cylOS"].forEach(id =>
   document.getElementById(id).addEventListener("input", updateRecommendation)
 );
 document.getElementById("addPower").addEventListener("change", updateRecommendation);
-document.getElementById("addPower").addEventListener("change", function () {
-  const hasAdd = this.value !== "";
+document.getElementById("addPower").addEventListener("change", toggleMFVisibility);
 
-  document.querySelectorAll('.mfonly').forEach(el => {
-    el.style.display = hasAdd ? 'none' : 'block';
-  });
-});
+
+
+
 
 function preloadImages(urls){ urls.forEach(src => { const img = new Image(); img.src = src; }); }
 function buildAllImageURLs(){
   const base = "https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/";
   const indexes = ["156","161","167","174"];
-  const adds = ["150","200","225","275","325"];
+  const adds = ["075","125","150","175","200","225","275","325"];
   const afAdds = ["075","125"];
   const urls = [];
   ["n","c"].forEach(prefix => { indexes.forEach(idx => { urls.push(`${base}${prefix}${idx}.jpg`); }); });
@@ -1374,13 +1380,6 @@ function stepSph(id, step){
 }
 </script>
 
-<script>
-function toggleHideShow(className) {
-  document.querySelectorAll('.' + className).forEach(el => {
-    el.classList.toggle('hidden');
-  });
-}
-</script>
 
 
 </body>
