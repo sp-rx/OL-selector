@@ -619,10 +619,9 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',-1)">-</button>
   <button class="normal" style="height:25px; padding:5px 5px" type="button" onclick="stepSph('cylOD',1)">+</button> 
 
-<button class="normal" style="height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">Hide SV</button>
 
 <button class="normal" style="height:25px;  padding:5px 15px" type="button" id="copyToggleBtn" onclick="toggleCopyMode()">
-  Normal
+  Normal Thickness
 </button>
 
     </div>
@@ -640,7 +639,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
     <div class="rx-row">
       <span class="rx-label">Add Prescription</span>
-<select id="addPower" style="max-width:80px; font-size:12px">
+<select id="addPower" style="width:240px; font-size:12px">
   <option value="">No Add Power</option>
   <option value="100">Relax +0.00 to +1.00</option>
   <option value="150">Entry +1.00 to +1.50</option>
@@ -652,6 +651,7 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 <button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(-1)">-</button>
 <button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(1)">+</button>
 
+<button class="normal" style="display:none; height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">Hide SV</button>
 
 
 <script>
@@ -1043,7 +1043,7 @@ function toggleCopyMode() {
   copyMode = !copyMode;
 
   const btn = document.getElementById("copyToggleBtn");
-  btn.innerText = copyMode ? "Thinner" : "Normal";
+  btn.innerText = copyMode ? "Thinner than Normal" : "Normal Thickness";
 
   btn.classList.toggle("active", copyMode);
 
@@ -1093,8 +1093,8 @@ function showMFPair(customIndex){
   // 🔥 map to pair
 const map = {
   "100": ["075","125"],
-  "150": ["150","200"],
-  "200": ["175","225"],
+  "150": ["150","175"],
+  "200": ["200","225"],
   "250": [275,"325"]
 };
 
