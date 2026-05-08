@@ -76,8 +76,12 @@ body::after {
   border-radius: 50%;
   pointer-events: none;
   z-index: 0;
+}
 
-
+#copyToggleBtn.active {
+  background: red;
+  color: white;
+  border-color: red;
 }
 
 .wrap {
@@ -617,6 +621,9 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
 <button class="normal" style="height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">Hide SV</button>
 
+<button class="normal" style="height:25px;  padding:5px 15px" type="button" id="copyToggleBtn" onclick="toggleCopyMode()">
+  Normal
+</button>
 
     </div>
 
@@ -633,17 +640,17 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
     <div class="rx-row">
       <span class="rx-label">Add Prescription</span>
-<select id="addPower" style="max-width:80px; font-size:9px">
+<select id="addPower" style="max-width:80px; font-size:12px">
   <option value="">No Add Power</option>
-  <option value="100">+0.00 to +1.00</option>
-  <option value="150">+1.00 to +1.50</option>
-  <option value="200">+1.50 to +2.00</option>
-  <option value="250">+2.00 to +2.50</option>
+  <option value="100">Relax +0.00 to +1.00</option>
+  <option value="150">Entry +1.00 to +1.50</option>
+  <option value="200">Normal +1.50 to +2.00</option>
+  <option value="250">Premium +2.00 to +2.50</option>
 </select>
 
 
-<button class="normal" type="button" onclick="stepAdd(-1)">-</button>
-<button class="normal" type="button" onclick="stepAdd(1)">+</button>
+<button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(-1)">-</button>
+<button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(1)">+</button>
 
 
 
@@ -1030,6 +1037,49 @@ function showSVImages(normalIndex, customIndex){
   }
 }
 
+let copyMode = false;
+
+function toggleCopyMode() {
+  copyMode = !copyMode;
+
+  const btn = document.getElementById("copyToggleBtn");
+  btn.innerText = copyMode ? "Thinner" : "Normal";
+
+  btn.classList.toggle("active", copyMode);
+
+  if (copyMode) {
+    syncODtoOS();
+  } else {
+    document.getElementById("sphOS").value = "0.00";
+    document.getElementById("cylOS").value = "0.00";
+  }
+
+  updateRecommendation();
+}
+
+
+
+function syncODtoOS() {
+  const sphOD = parseFloat(document.getElementById("sphOD").value);
+  const cylOD = document.getElementById("cylOD").value;
+
+  if (isNaN(sphOD)) return;
+
+  const sign = sphOD < 0 ? -1 : 1;
+  const sphOS = sign * (Math.abs(sphOD) + 2);
+
+  let formatted = sphOS.toFixed(2);
+  if (sphOS > 0) formatted = "+" + formatted;
+
+  document.getElementById("sphOS").value = formatted;
+  document.getElementById("cylOS").value = cylOD;
+
+  updateRecommendation();
+}
+
+
+
+
 function showMFPair(customIndex){
   const normalDiv = document.getElementById("mfNormalContainer");
   const wideDiv   = document.getElementById("mfWideContainer");
@@ -1103,6 +1153,12 @@ showMFPair(customIndex);
 toggleMFVisibility();
 }
 
+["sphOD","cylOD"].forEach(id =>
+  document.getElementById(id).addEventListener("input", () => {
+    updateRecommendation();
+    if (copyMode) syncODtoOS();
+  })
+);
 
 ["sphOD","cylOD","sphOS","cylOS"].forEach(id =>
   document.getElementById(id).addEventListener("input", updateRecommendation)
@@ -1146,6 +1202,23 @@ window.addEventListener("load", async () => {
 
 });
 </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <script>
 const allFiles = ['500','300','100','000','-200','-400','-600','-800','-1000','-1200'];
