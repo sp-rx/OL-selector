@@ -149,6 +149,12 @@ body::after {
   background: var(--forest);
 }
 
+.toggleBtn.active {
+  background: red !important;
+  color: white !important;
+  border-color: red !important;
+}
+
 .header-ornament svg {
   width: 18px;
   height: 18px;
@@ -582,9 +588,54 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
 
   <!-- WEARER DETAILS -->
   <div class="section">
-    <h2 class="section-title">Wearer's Details <button class="normal" onclick="toggleHideShow('myBlock')">Toggle Whatsapp</button>
+<h2>
+<button style="height:25px;  padding:5px 15px" class="normal" onclick="toggleHideShow('myBlock')">Toggle Whatsapp</button> 
+
+
+<button
+  style="height:25px; padding:5px 15px"
+  class="normal toggleBtn"
+  onclick="showLensSet('images', this)">
+  Show All Lenses
+</button>
+
+<button
+  style="height:25px; padding:5px 15px"
+  class="normal toggleBtn"
+  onclick="showLensSet('lenses', this)">
+  Show Suitable Lens
+</button>
+
+
+
 </h2>
 
+<script>
+function showLensSet(type, btn) {
+
+  document.getElementById("lensSet").classList.add("hidden");
+  document.getElementById("imageSet").classList.add("hidden");
+
+  document.querySelectorAll(".toggleBtn").forEach(b => {
+    b.classList.remove("active");
+  });
+
+  btn.classList.add("active");
+
+  if(type === "images"){
+    document.getElementById("imageSet").classList.remove("hidden");
+  }
+
+  if(type === "lenses"){
+    document.getElementById("lensSet").classList.remove("hidden");
+  }
+
+}
+</script>
+
+<div style="height:20px"></div>
+    <h2 class="section-title">Wearer's Details 
+</h2>
 <div class="myBlock hidden">
     <label>Full Name</label>
     <input style="width:100%" id="name" type="text" placeholder="Patient name">
@@ -604,6 +655,13 @@ See clearer, no headaches, no dizziness, no discomforts.</span>
   </div>
 <div style="height:5px"></div>
 
+<script>
+function toggleHideShow(blockClass) {
+  document
+    .querySelector("." + blockClass)
+    .classList.toggle("hidden");
+}
+</script>
 
   <!-- INDEX RECOMMENDER -->
 
@@ -905,8 +963,12 @@ function stepAdd(dir) {
 
   </div><!-- /section index recommender -->
 
+
+<div id="lensSet">
+
   <!-- LENS CARDS -->
   <div class="lens-container">
+
     <div class="sectionlens mfonly" style="min-height:500px" ><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
     <div class="sectionlens mfonly"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
@@ -920,6 +982,79 @@ function stepAdd(dir) {
 </div>
 
   </div>
+
+</div>
+
+
+<!-- IMAGE SET -->
+<div id="imageSet" class="hidden">
+
+  <div class="lens-container">
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="n000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/n000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="c000Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/c000.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf075Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add075.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf125Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add125.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf150Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add150.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf175Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add175.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf200Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add200.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf225Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add225.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf275Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add275.jpg" style="width:100%">
+      </div>
+    </div>
+
+    <div class="sectionlens" style="min-height:500px">
+      <div id="mf325Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
+        <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add325.jpg" style="width:100%">
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
 
 <script>
 function toggleMFVisibility() {
@@ -1432,6 +1567,12 @@ function setCircleSize(size, btn) {
 document.addEventListener('DOMContentLoaded', () => {
   const firstButton = document.querySelector('.circleBtn');
   if (firstButton) setCircleSize(338, firstButton);
+});
+
+window.addEventListener("load", () => {
+  document.querySelectorAll('#imageSet img').forEach(img => {
+    img.onclick = () => openLightbox(img.src);
+  });
 });
 </script>
 
