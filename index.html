@@ -709,6 +709,11 @@ function toggleHideShow(blockClass) {
 <button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(-1)">-</button>
 <button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(1)">+</button>
 
+
+<button class="normal" style="height:25px;  padding:5px 15px" type="button" onclick="toggleOfficeLens()">Office Lens</button>
+
+
+
 <button class="normal" style="display:none; height:25px;  padding:5px 15px" onclick="togglemfonly('mfonly')">Hide SV</button>
 
 
@@ -971,7 +976,20 @@ function stepAdd(dir) {
 
     <div class="sectionlens mfonly" style="min-height:500px" ><div id="normalLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
 
+
     <div class="sectionlens mfonly"><div id="customLensContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div></div>
+
+<div class="sectionlens myopiashow" style="min-height:500px">
+  <div id="myopiaContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+
+<div id="officeLensSection" style="display:none">
+  <div class="sectionlens" style="min-height:500px">
+    <div id="officeContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+  </div>
+</div>
+
+
 
 <div class="sectionlens mfshow" style="min-height:500px">
   <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
@@ -1060,14 +1078,16 @@ function stepAdd(dir) {
 function toggleMFVisibility() {
   const hasAdd = document.getElementById("addPower").value !== "";
 
-  // Hide/show SINGLE VISION
   document.querySelectorAll('.mfonly').forEach(el => {
     el.style.display = hasAdd ? 'none' : 'block';
   });
 
-  // Hide/show MULTIFOCAL
   document.querySelectorAll('.mfshow').forEach(el => {
     el.style.display = hasAdd ? 'block' : 'none';
+  });
+
+  document.querySelectorAll('.myopiashow').forEach(el => {
+    el.style.display = hasAdd ? 'none' : 'block';
   });
 }
 </script>
@@ -1128,6 +1148,62 @@ function calcIndex(sph, cyl, type) {
   }
   return index;
 }
+
+function calcMyopiaIndex(sph, cyl){
+  if (sph > 0) return "UNAVAILABLE";
+  return calcIndex(sph, cyl, "custom");
+}
+
+function showMyopiaControl(myopiaIndex){
+  const div = document.getElementById("myopiaContainer");
+  if (!div) return;
+
+  div.innerHTML = "";
+
+  if (myopiaIndex === "UNAVAILABLE"){
+    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+    return;
+  }
+
+  if (myopiaIndex === "N/A"){
+    div.innerHTML = '<span style="font-family:\'DM+Serif+Display\',serif; font-style:italic; color:var(--forest); padding:14px; display:block">RX out of range</span>';
+    return;
+  }
+
+  const img = document.createElement("img");
+  img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mc${myopiaIndex.replace(".","")}.jpg`;
+  img.style.width = "100%";
+  img.onclick = () => openLightbox(img.src);
+
+  div.appendChild(img);
+}
+
+function showOfficeLens(customIndex){
+  const div = document.getElementById("officeContainer");
+  if (!div) return;
+
+  div.innerHTML = "";
+
+  if (customIndex === "N/A") return;
+
+  const img = document.createElement("img");
+  img.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/of${customIndex.replace(".","")}.jpg`;
+  img.style.width = "100%";
+  img.onclick = () => openLightbox(img.src);
+
+  div.appendChild(img);
+}
+
+
+let officeLensVisible = false;
+
+function toggleOfficeLens(){
+  officeLensVisible = !officeLensVisible;
+
+  document.getElementById("officeLensSection").style.display =
+    officeLensVisible ? "block" : "none";
+}
+
 
 function getSVImage(type, index){
   if (!index || index === "N/A") return null;
@@ -1279,6 +1355,16 @@ function updateRecommendation() {
   const customIndex = (customOD === "N/A" || customOS === "N/A") ? "N/A" :
     ["1.56","1.61","1.67","1.74"].slice().reverse().find(i => i === customOD || i === customOS);
 
+const mcOD = calcMyopiaIndex(sphOD, cylOD);
+const mcOS = calcMyopiaIndex(sphOS, cylOS);
+
+const myopiaIndex =
+  (mcOD === "UNAVAILABLE" || mcOS === "UNAVAILABLE")
+    ? "UNAVAILABLE"
+    : ["1.56","1.61","1.67","1.74"]
+        .slice()
+        .reverse()
+        .find(i => i === mcOD || i === mcOS);
   document.getElementById("indexResult").innerHTML = customIndex || "—";
 
   showSVImages(normalIndex, customIndex);
@@ -1286,6 +1372,8 @@ function updateRecommendation() {
   // ✅ ONLY THIS
 showMFPair(customIndex);
 toggleMFVisibility();
+showMyopiaControl(myopiaIndex);
+showOfficeLens(customIndex);
 }
 
 ["sphOD","cylOD"].forEach(id =>
@@ -1315,7 +1403,13 @@ function buildAllImageURLs(){
   ["n","c"].forEach(prefix => { indexes.forEach(idx => { urls.push(`${base}${prefix}${idx}.jpg`); }); });
   indexes.forEach(idx => { adds.forEach(add => { urls.push(`${base}mf${idx}_add${add}.jpg`); }); });
   indexes.forEach(idx => { afAdds.forEach(add => { urls.push(`${base}af${idx}_add${add}.jpg`); }); });
+indexes.forEach(idx => {
+  urls.push(`${base}mc${idx}.jpg`);
+  urls.push(`${base}of${idx}.jpg`);
+});
+
   return urls;
+
 }
 
 function preloadImagesAsync(urls){
