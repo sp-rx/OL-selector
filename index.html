@@ -60,7 +60,6 @@ body {
   bottom:0;
   background: #fff;
   backdrop-filter: blur(1.5px);
-  transition: all 0.2s ease;
 }
 
 
@@ -899,6 +898,7 @@ function stepAdd(dir) {
 
  <h3><button class="normal" style="width:327px; height:40px; border-radius:10px;" onclick="togglethickness()">Align this box to fit screen width; then press to see thickness chart</button> 
 
+
 </h3>
 
 
@@ -911,7 +911,10 @@ function stepAdd(dir) {
       </script>
 
 
+
+
       <div id="reContainer" class="thickness" style="margin-top:20px; display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
+
         <img id="reImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
 
   <div class="lensMask" data-i="0"></div>
@@ -922,8 +925,16 @@ function stepAdd(dir) {
 
         <span id="reOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Thickness Estimator</span>
       </div>
-      <div class="thickness" style="display:none; height:20px"></div>
+
+      <div class="thickness" style="display:none; height:40px">
+<button style="margin-top:10px; height:25px; width:700px; padding:5px 15px" class="normal"  onclick="toggleShowAll()">
+  Show All Index Thickness
+</button></div>
+
+
+
 <div style="display:none">
+
       <div id="leContainer" class="thickness" style="display:none; position:relative; border-radius:10px; width:700px; height:250px; overflow:hidden;">
         <img id="leImg" style="width:100%; height:100%; object-fit:cover; object-position:50% 0%;">
         <span id="leOverlay" style="position:absolute; top:7px; left:40px; color:grey; font-size:12px;">Left Eye Thickness</span>
@@ -1181,7 +1192,12 @@ function calcIndex(sph, cyl, type) {
   return index;
 }
 
+let showAllLenses = false;
+let currentLensIndex = "1.56"; // default
+
 function focusLens(index){
+
+  currentLensIndex = index; // remember last selection
 
   const map = {
     "1.56": 0,
@@ -1193,28 +1209,46 @@ function focusLens(index){
   const active = map[index];
 
   const config = [
-{ left: "0px",  width: "180px" },
-{ left: "180px",  width: "160px" },
-{ left: "340px",  width: "170px" },
-{ left: "510px",  width: "180px" }
+    { left: "0px",  width: "180px" },
+    { left: "180px",  width: "160px" },
+    { left: "340px",  width: "170px" },
+    { left: "510px",  width: "180px" }
   ];
 
   document.querySelectorAll(".lensMask").forEach(m => {
     const i = Number(m.dataset.i);
-
     const cfg = config[i];
 
     m.style.left = cfg.left;
     m.style.width = cfg.width;
 
+    if (showAllLenses) {
+      m.style.opacity = "0";
+      return;
+    }
+
     if (i === active) {
-      m.style.opacity = "0";        // EXACT clear area
+      m.style.opacity = "0";
     } else {
-      m.style.opacity = "0.75";     // covered area
+      m.style.opacity = "0.75";
       m.style.backgroundColor = "#fff";
     }
   });
 }
+
+function toggleShowAll() {
+  showAllLenses = !showAllLenses;
+
+  if (showAllLenses) {
+    document.querySelectorAll(".lensMask").forEach(m => {
+      m.style.opacity = "0";
+    });
+  } else {
+    focusLens(currentLensIndex); // restore last selected lens
+  }
+}
+
+
 
 function calcMyopiaIndex(sph, cyl){
   if (sph > 0) return "UNAVAILABLE";
@@ -1560,7 +1594,7 @@ function updateLens(eye){
   let imgElement = document.getElementById(eye==='RE'?'reImg':'leImg');
   if(imgElement){
     imgElement.src = `https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/thickness-photo/${file}.jpg`;
-    imgElement.style.objectPosition = `50% ${half==='top'?0:95}%`;
+    imgElement.style.objectPosition = `50% ${half==='top'?0:94.5}%`;
   }
 }
 ['sphOD','cylOD','sphOS','cylOS'].forEach(id=>{
