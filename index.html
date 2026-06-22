@@ -16,7 +16,7 @@
 --gold-l:   #0000ff;   /* blue */
 
 --cream:    #d8d8d8;   /* blue */
---paper:    #f5f0e8;   /* light grey */
+--paper:    #faf8f4;   /* light grey */
 
 --ink:      #303030;   /* black */
 
@@ -157,6 +157,12 @@ body::after {
   width: 40px;
   height: 1px;
   background: var(--forest);
+}
+
+.toggleBtnoffice.active {
+  background: #0B3D6E !important;
+  color: white !important;
+  border-color: red !important;
 }
 
 .toggleBtn.active {
@@ -668,7 +674,7 @@ function showLensSet(type, btn) {
 </script>
 
 <div style="height:20px"></div>
-    <h2 class="section-title">Wearer's Details 
+    <h2 class="section-title">Lens' Details 
 </h2>
 
 <script>
@@ -726,7 +732,7 @@ function toggleHideShow(blockClass) {
 <button style="height:25px;  padding:5px 5px" class="normal" type="button" onclick="stepAdd(1)">+</button>
 
 
-<button class="normal" style="height:25px;  padding:5px 15px" type="button" onclick="toggleOfficeLens()">Office Lens</button>
+<button style="height:25px;  padding:5px 15px" type="button" id="officeLensBtn" class="normal toggleBtnoffice" onclick="toggleOfficeLens()">Office Lens</button>
 
 
 
@@ -1021,7 +1027,7 @@ function stepAdd(dir) {
 </div>
 
 <div id="officeLensSection" style="display:none">
-  <div class="sectionlens" style="min-height:500px">
+  <div class="sectionlens" style="min-height:500px; border:3px #004187 solid ">
     <div id="officeContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
   </div>
 </div>
@@ -1309,6 +1315,9 @@ function toggleOfficeLens(){
 
   document.getElementById("officeLensSection").style.display =
     officeLensVisible ? "block" : "none";
+
+  document.getElementById("officeLensBtn")
+    .classList.toggle("active", officeLensVisible);
 }
 
 
