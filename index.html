@@ -1029,21 +1029,24 @@ function stepAdd(dir) {
   <div id="myopiaContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
 </div>
 
+
+<div style="display:none">
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+</div>
+
+
+<div class="sectionlens mfshow" style="min-height:500px">
+  <div id="mfWideContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
+</div>
+
 <div id="officeLensSection" style="display:none">
   <div class="sectionlens" style="min-height:500px; border:3px #004187 solid ">
     <div id="officeContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
   </div>
 </div>
 
-
-
-<div class="sectionlens mfshow" style="min-height:500px">
-  <div id="mfNormalContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
-</div>
-
-<div class="sectionlens mfshow" style="min-height:500px">
-  <div id="mfWideContainer" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)"></div>
-</div>
 
   </div>
 
@@ -1079,23 +1082,31 @@ function stepAdd(dir) {
       </div>
     </div>
 
+
     <div class="sectionlens" style="min-height:500px">
       <div id="mf075Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add075.jpg" style="width:100%">
       </div>
     </div>
 
+
+<div style="display:none">
+
     <div class="sectionlens" style="min-height:500px">
       <div id="mf125Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add125.jpg" style="width:100%">
       </div>
     </div>
+</div>
 
+
+<div style="display:none">
     <div class="sectionlens" style="min-height:500px">
       <div id="mf150Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add150.jpg" style="width:100%">
       </div>
     </div>
+</div>
 
     <div class="sectionlens" style="min-height:500px">
       <div id="mf175Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
@@ -1103,11 +1114,14 @@ function stepAdd(dir) {
       </div>
     </div>
 
+<div style="display:none">
     <div class="sectionlens" style="min-height:500px">
       <div id="mf200Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add200.jpg" style="width:100%">
       </div>
     </div>
+</div>
+
 
     <div class="sectionlens" style="min-height:500px">
       <div id="mf225Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
@@ -1115,11 +1129,15 @@ function stepAdd(dir) {
       </div>
     </div>
 
+
+<div style="display:none">
+
     <div class="sectionlens" style="min-height:500px">
       <div id="mf275Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
         <img src="https://raw.githubusercontent.com/sp-rx/OL-selector/refs/heads/main/Lens_Catalogue/mf000_add275.jpg" style="width:100%">
       </div>
     </div>
+</div>
 
     <div class="sectionlens" style="min-height:500px">
       <div id="mf325Container" style="padding:14px; font-family:'DM+Serif+Display',serif; font-style:italic; color:var(--forest-l)">
@@ -1422,7 +1440,7 @@ function showMFPair(customIndex){
 
   // 🔥 map to pair
 const map = {
-  "100": ["075","125"],
+  "100": ["125","075"],
   "150": ["150","175"],
   "200": ["200","225"],
   "250": [275,"325"]
